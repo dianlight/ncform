@@ -1,0 +1,37 @@
+build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install
+    - run: npx lerna run release
+    - uses: gagle/package-version@v1
+      id: package-version
+    - name: Archive Release
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: 'ncform-${{ steps.package-version.outputs.version }}.zip'
+        directory: 'packages/ncform'
+        exclusions: '*.git* /*node_modules/* .editorconfig'
+    - name: Archive Release
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: 'ncform-common-${{ steps.package-version.outputs.version }}.zip'
+        directory: 'packages/ncform-common'
+        exclusions: '*.git* /*node_modules/* .editorconfig'
+    - name: Archive Release
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: 'ncform-theme-elementui-${{ steps.package-version.outputs.version }}.zip'
+        directory: 'packages/ncform-theme-elementui'
+        exclusions: '*.git* /*node_modules/* .editorconfig'
