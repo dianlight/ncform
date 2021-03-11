@@ -25,8 +25,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: npx lerna run release
-    - uses: gagle/package-version@v1
-      id: package-version
+    - name: Read package version
+      uses: gagle/package-version@v1.0.0    
     - name: Archive Release
       uses: thedoctor0/zip-release@master
       with:
