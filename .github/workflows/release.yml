@@ -36,21 +36,21 @@ jobs:
       with:
         filename: 'ncform-${{ steps.package-version.outputs.version }}.zip'
         directory: 'packages/ncform'
-        exclusions: '*.git* /*node_modules/* .editorconfig'
+        exclusions: '*.git* */node_modules/* .editorconfig'
         type: 'tar'
     - name: Archive Release
       uses: thedoctor0/zip-release@master
       with:
         filename: 'ncform-common-${{ steps.package-version.outputs.version }}.zip'
         directory: 'packages/ncform-common'
-        exclusions: '*.git* /*node_modules/* .editorconfig'
+        exclusions: '*.git* */node_modules/* .editorconfig'
         type: 'tar'
     - name: Archive Release
       uses: thedoctor0/zip-release@master
       with:
         filename: 'ncform-theme-elementui-${{ steps.package-version.outputs.version }}.zip'
         directory: 'packages/ncform-theme-elementui'
-        exclusions: '*.git* /*node_modules/* .editorconfig'
+        exclusions: '*.git* */node_modules/* .editorconfig'
         type: 'tar'
     - name: Upload Release
       uses: ncipollo/release-action@v1
