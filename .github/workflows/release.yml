@@ -31,27 +31,9 @@ jobs:
     - run: npx lerna run release
     - name: Read package version
       uses: gagle/package-version@v1.0.0    
-    - name: Archive Release
-      uses: thedoctor0/zip-release@master
-      with:
-        filename: 'ncform-${{ steps.package-version.outputs.version }}.zip'
-        directory: 'packages/ncform'
-        exclusions: '*.git* ./test/* ./node_modules/* .editorconfig'
-        type: 'tar'
-    - name: Archive Release
-      uses: thedoctor0/zip-release@master
-      with:
-        filename: 'ncform-common-${{ steps.package-version.outputs.version }}.zip'
-        directory: 'packages/ncform-common'
-        exclusions: '*.git* ./test/* ./node_modules/* .editorconfig'
-        type: 'tar'
-    - name: Archive Release
-      uses: thedoctor0/zip-release@master
-      with:
-        filename: 'ncform-theme-elementui-${{ steps.package-version.outputs.version }}.zip'
-        directory: 'packages/ncform-theme-elementui'
-        exclusions: '*.git* ./test/* ./node_modules/* .editorconfig'
-        type: 'tar'
+    - run: tar -cjvf ncform-${{ steps.package-version.outputs.version }}.tar.gz --exclude ./node_modules --exclude ./test --exclude ./mock  -C packages/ncform .  
+    - run: tar -cjvf ncform-common-${{ steps.package-version.outputs.version }}.tar.gz --exclude ./node_modules --exclude ./test --exclude ./mock  -C packages/ncform-common .  
+    - run: tar -cjvf ncform-theme-elementui-${{ steps.package-version.outputs.version }}.tar.gz --exclude ./node_modules --exclude ./test --exclude ./mock  -C packages/ncform-theme-elementui .  
     - name: Upload Release
       uses: ncipollo/release-action@v1
       with:
